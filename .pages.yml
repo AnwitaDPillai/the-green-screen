@@ -1,0 +1,182 @@
+# Pages CMS Configuration for The Green Screen
+# https://pagescms.org
+
+media:
+  input: public/media
+  output: /media
+
+collections:
+  - name: archive
+    label: The Archive (Stories & Essays)
+    type: content
+    path: src/content/archive
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle / Dek
+        type: string
+      - name: author
+        label: Author Name
+        type: string
+        required: true
+      - name: authorBio
+        label: Author Biography
+        type: string
+      - name: genre
+        label: Genre
+        type: select
+        options:
+          - Fiction
+          - Essay
+          - Poetry
+        required: true
+      - name: buildingTypology
+        label: Building Typology
+        type: select
+        options:
+          - Cinema
+          - Library
+          - School
+          - Housing Block
+          - Civic Hall
+          - Industrial
+        required: true
+      - name: pairedBuildingName
+        label: Paired Building Name
+        type: string
+        required: true
+      - name: pairedIntervention
+        label: Real Retrofit Intervention
+        type: string
+        required: true
+      - name: pairedBuildingLocation
+        label: Real Building Location
+        type: string
+        required: true
+      - name: issueNumber
+        label: Issue Number
+        type: number
+        default: 1
+      - name: readingTimeMinutes
+        label: Estimated Reading Time (Minutes)
+        type: number
+        default: 7
+      - name: featured
+        label: Featured on Broadside
+        type: boolean
+        default: false
+      - name: status
+        label: Editorial Status
+        type: select
+        options:
+          - draft
+          - review
+          - approved
+          - published
+        default: draft
+        required: true
+      - name: approvedBy
+        label: Approved By (Editor-in-Chief / Final Approver)
+        type: string
+      - name: approvedAt
+        label: Approval Date
+        type: date
+      - name: publishDate
+        label: Intended Publication Date
+        type: date
+        required: true
+      - name: sources
+        label: Factual / Technical Sources
+        type: list
+      - name: body
+        label: Literary Text Body
+        type: rich-text
+
+  - name: screening-room
+    label: The Screening Room (Dialogues)
+    type: content
+    path: src/content/screening-room
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: episodeNumber
+        label: Episode Number
+        type: number
+        required: true
+      - name: duration
+        label: Duration
+        type: string
+        default: "32:15"
+      - name: recordingDate
+        label: Recording Date
+        type: date
+      - name: pairedPieceTitle
+        label: Paired Story Title
+        type: string
+      - name: status
+        label: Editorial Status
+        type: select
+        options:
+          - draft
+          - review
+          - approved
+          - published
+        default: draft
+      - name: approvedBy
+        label: Approved By
+        type: string
+      - name: approvedAt
+        label: Approval Date
+        type: date
+      - name: publishDate
+        label: Publication Date
+        type: date
+      - name: body
+        label: Session Notes & Transcript
+        type: rich-text
+
+  - name: issues
+    label: Issues & Volumes
+    type: content
+    path: src/content/issues
+    fields:
+      - name: issueNumber
+        label: Issue Number
+        type: number
+        required: true
+      - name: title
+        label: Issue Title
+        type: string
+        required: true
+      - name: theme
+        label: Thematic Focus
+        type: string
+      - name: seasonYear
+        label: Season / Year
+        type: string
+      - name: editorsNote
+        label: Editor's Note
+        type: string
+      - name: status
+        label: Editorial Status
+        type: select
+        options:
+          - draft
+          - review
+          - approved
+          - published
+        default: draft
+      - name: approvedBy
+        label: Approved By
+        type: string
+      - name: approvedAt
+        label: Approval Date
+        type: date
+      - name: publishDate
+        label: Publication Date
+        type: date

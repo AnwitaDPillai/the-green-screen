@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title       = 'The Green Screen — Climatizing Infrastructure: Green Retrofit',
+  description = 'A digital magazine and archive pairing climate fiction with real buildings and retrofit engineering interventions.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/png" href="/brand/Monogram.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body class="paper min-h-screen flex flex-col">
+
+  <!-- Reading progress hairline -->
+  <div id="progress-bar"></div>
+
+  <!--
+    ═══════════════════════════════════════════
+    MASTHEAD
+    ═══════════════════════════════════════════
+  -->
+  <header class="sticky top-0 z-50 bg-canvas border-b-2 border-ink">
+
+    <!-- Top ticker: archival metadata -->
+    <div class="border-b border-ink-12 px-6 py-1.5 flex items-center justify-between font-ui text-[10px] tracking-widest uppercase text-ink-60">
+      <span>Vol. I &middot; No. 1 &mdash; Autumn / Winter 2026</span>
+      <span class="hidden md:block">Climatizing Infrastructure: Green Retrofit</span>
+      <span class="hidden sm:block font-mono">51°30′N · 0°07′W</span>
+    </div>
+
+    <!-- Logo row -->
+    <div class="px-6 py-4 flex items-center justify-between">
+      <!-- Horizontal logo: constrained to a sensible header height -->
+      <a href="/" class="block shrink-0">
+        <img
+          src="/brand/Horizontal Logo.png"
+          alt="The Green Screen"
+          class="h-8 sm:h-9 w-auto object-contain"
+        />
+      </a>
+
+      <!-- Tagline (desktop) -->
+      <p class="hidden lg:block font-display italic text-[13px] text-ink-60 tracking-wide">
+        A different way to inhabit the future.
+      </p>
+
+      <!-- Monogram stamp (desktop right) -->
+      <a href="/" class="hidden sm:block shrink-0">
+        <img
+          src="/brand/Monogram.png"
+          alt=""
+          class="h-7 w-7 object-contain opacity-80"
+        />
+      </a>
+    </div>
+
+    <!-- Navigation bar -->
+    <nav class="border-t border-ink-12 px-6 py-0 flex items-stretch font-ui text-[11px] tracking-wide uppercase overflow-x-auto">
+      <a href="/"
+         class="flex items-center px-3 py-3 text-ink hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        Broadside
+      </a>
+      <a href="/archive"
+         class="flex items-center px-3 py-3 text-ink hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        The Archive
+      </a>
+      <a href="/atlas"
+         class="flex items-center gap-2 px-3 py-3 text-ink-60 hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        The Atlas
+        <span class="font-mono text-[8px] px-1 py-0.5 border border-ink-30 text-ink-60 rounded-[2px] normal-case tracking-normal">Soon</span>
+      </a>
+      <a href="/screening-room"
+         class="flex items-center px-3 py-3 text-ink hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        Screening Room
+      </a>
+      <a href="/the-hypothesis"
+         class="flex items-center gap-1.5 px-3 py-3 text-ink hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        The Hypothesis
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-rust shrink-0"></span>
+      </a>
+      <a href="/about"
+         class="flex items-center px-3 py-3 text-ink hover:text-forest hover:bg-forest-10 border-r border-ink-12 transition-colors whitespace-nowrap">
+        About
+      </a>
+      <!-- pushes submit to far right -->
+      <div class="flex-1"></div>
+      <a href="/submit"
+         class="flex items-center px-4 py-3 text-rust hover:bg-rust hover:text-canvas border-l border-ink-12 font-medium transition-colors whitespace-nowrap">
+        Submit
+      </a>
+    </nav>
+  </header>
+
+  <!-- Page content -->
+  <main class="flex-1">
+    <slot />
+  </main>
+
+  <!--
+    ═══════════════════════════════════════════
+    FOOTER / COLOPHON
+    ═══════════════════════════════════════════
+  -->
+  <footer class="mt-20 border-t-2 border-ink bg-canvas">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 border-b border-ink-12">
+
+      <!-- Identity -->
+      <div class="space-y-4">
+        <img src="/brand/Horizontal Logo.png" alt="The Green Screen" class="h-6 w-auto object-contain" />
+        <p class="font-ui text-[12px] text-ink-60 leading-relaxed">
+          A digital magazine and archive for climate fiction about the built environment. Stories, essays, and poetry paired with real buildings and retrofit interventions.
+        </p>
+      </div>
+
+      <!-- Sections -->
+      <div class="space-y-3">
+        <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60">Sections</p>
+        <ul class="space-y-1.5 font-ui text-[12px]">
+          <li><a href="/archive"         class="text-ink hover:text-forest transition-colors">The Archive</a></li>
+          <li><a href="/atlas"           class="text-ink-60 hover:text-forest transition-colors">The Atlas <span class="text-[10px]">(Coming Soon)</span></a></li>
+          <li><a href="/screening-room"  class="text-ink hover:text-forest transition-colors">The Screening Room</a></li>
+          <li><a href="/the-hypothesis"  class="text-ink hover:text-forest transition-colors">The Hypothesis</a></li>
+        </ul>
+      </div>
+
+      <!-- Editorial -->
+      <div class="space-y-3">
+        <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60">Editorial</p>
+        <ul class="space-y-1.5 font-ui text-[12px]">
+          <li><a href="/about"           class="text-ink hover:text-forest transition-colors">Manifesto & Values</a></li>
+          <li><a href="/submit"          class="text-rust hover:text-forest transition-colors font-medium">Open Submissions</a></li>
+          <li><a href="/about#editorial" class="text-ink hover:text-forest transition-colors">Editorial Protocol</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60">
+        © {new Date().getFullYear()} The Green Screen &mdash; All rights reserved
+      </p>
+      <p class="font-display italic text-[11px] text-ink-60">
+        A different way to inhabit the future.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Reading progress
+    const bar = document.getElementById('progress-bar');
+    if (bar) {
+      window.addEventListener('scroll', () => {
+        const el = document.documentElement;
+        const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+        bar.style.width = pct + '%';
+      }, { passive: true });
+    }
+  </script>
+
+</body>
+</html>

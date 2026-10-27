@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getPublishedEntries } from '../lib/publication';
+
+const allStories = await getCollection('archive');
+const published  = getPublishedEntries(allStories);
+const featured   = published.find(s => s.data.featured) ?? published[0] ?? null;
+const secondary  = published.filter(s => s.slug !== featured?.slug).slice(0, 3);
+
+const skeletonCards = [1, 2, 3];
+---
+
+<Layout>
+  <!--
+    ══════════════════════════════════════════
+    HERO DISPATCH — featured story + retrofit companion
+    ══════════════════════════════════════════
+  -->
+  <section class="border-b-2 border-ink">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-0">
+
+      <!-- Left: Featured Story -->
+      <div class="lg:col-span-8 lg:border-r-2 lg:border-ink lg:pr-10 pb-10 lg:pb-0 space-y-6">
+
+        <div class="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-ink-60 border-b border-ink-12 pb-3">
+          <span class="px-2 py-0.5 bg-forest text-canvas text-[9px] font-ui font-semibold tracking-widest">FEATURED DISPATCH</span>
+          <span>Issue No. 1 &mdash; The Thermal Envelope</span>
+        </div>
+
+        {featured ? (
+          <div class="space-y-5">
+            <p class="font-ui text-[10px] uppercase tracking-widest text-rust">
+              {featured.data.genre} &middot; {featured.data.readingTimeMinutes}&nbsp;min read
+            </p>
+            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-forest font-bold leading-display max-w-prose">
+              <a href={`/archive/${featured.slug}`} class="hover:underline underline-offset-4">
+                {featured.data.title}
+              </a>
+            </h1>
+            {featured.data.subtitle && (
+              <p class="font-display italic text-xl text-ink-60 max-w-2xl leading-snug">
+                {featured.data.subtitle}
+              </p>
+            )}
+            <p class="font-ui text-[12px] text-ink-60">
+              By <span class="text-ink font-medium">{featured.data.author}</span>
+            </p>
+            <a
+              href={`/archive/${featured.slug}`}
+              class="inline-flex items-center gap-2 font-ui text-[11px] uppercase tracking-wider font-semibold text-forest border border-forest px-4 py-2 hover:bg-forest hover:text-canvas transition-colors"
+            >
+              Read the Story &rarr;
+            </a>
+          </div>
+        ) : (
+          <div class="space-y-5">
+            <div class="skeleton h-3 w-28 rounded"></div>
+            <div class="space-y-2">
+              <div class="skeleton h-12 w-full rounded"></div>
+              <div class="skeleton h-12 w-4/5 rounded"></div>
+              <div class="skeleton h-12 w-3/5 rounded"></div>
+            </div>
+            <div class="skeleton h-5 w-72 rounded"></div>
+            <div class="skeleton h-4 w-36 rounded"></div>
+            <div class="skeleton h-9 w-40 rounded"></div>
+            <p class="font-ui text-[11px] text-ink-60 italic pt-2">
+              The first issue is forthcoming. Submissions are open.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <!-- Right: Technical Companion -->
+      <div class="lg:col-span-4 lg:pl-10 pt-8 lg:pt-0 space-y-5">
+        <div class="border-b border-ink-12 pb-3">
+          <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60">// Technical Companion</p>
+        </div>
+
+        {featured ? (
+          <div class="space-y-4">
+            <div>
+              <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60 mb-1">Real Building</p>
+              <h3 class="font-display text-lg font-semibold text-ink leading-snug">{featured.data.pairedBuildingName}</h3>
+              <p class="font-ui text-[11px] text-ink-60">{featured.data.pairedBuildingLocation}</p>
+            </div>
+            <div>
+              <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60 mb-1">Retrofit Intervention</p>
+              <p class="font-display italic text-[13px] text-ink leading-snug">{featured.data.pairedIntervention}</p>
+            </div>
+            <div class="border border-ink-12 p-3 space-y-2 bg-canvas">
+              <p class="font-mono text-[8px] uppercase text-ink-60 tracking-wider">Atlas Specimen</p>
+              <div class="flex justify-between font-mono text-[10px]">
+                <span class="text-ink-60">Typology</span>
+                <span class="text-ink font-medium">{featured.data.buildingTypology}</span>
+              </div>
+              <div class="h-px bg-ink-12"></div>
+              <div class="flex justify-between font-mono text-[10px]">
+                <span class="text-ink-60">Issue</span>
+                <span class="text-ink font-medium">No. {featured.data.issueNumber}</span>
+              </div>
+            </div>
+            <a
+              href="/the-hypothesis"
+              class="block w-full py-2.5 text-center font-ui text-[10px] uppercase tracking-wider bg-forest text-canvas hover:bg-ink transition-colors"
+            >
+              Compare: Brief vs. Story &rarr;
+            </a>
+          </div>
+        ) : (
+          <div class="space-y-4">
+            <div class="skeleton h-3 w-24 rounded"></div>
+            <div class="space-y-1.5">
+              <div class="skeleton h-6 w-full rounded"></div>
+              <div class="skeleton h-4 w-2/3 rounded"></div>
+            </div>
+            <div class="skeleton h-3 w-24 rounded"></div>
+            <div class="skeleton h-16 w-full rounded"></div>
+            <div class="skeleton h-9 w-full rounded"></div>
+          </div>
+        )}
+      </div>
+
+    </div>
+  </section>
+
+  <!--
+    ══════════════════════════════════════════
+    THREE ARCHIVAL PILLARS
+    ══════════════════════════════════════════
+  -->
+  <section class="border-b-2 border-ink">
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-12">
+
+      <a href="/archive" class="group px-0 md:pr-8 py-4 md:py-0 space-y-3 hover:opacity-80 transition-opacity">
+        <div class="flex items-center justify-between">
+          <p class="font-mono text-[9px] uppercase tracking-widest text-rust">01 / Literature</p>
+          <span class="font-mono text-[9px] text-ink-60">{published.length} piece{published.length !== 1 ? 's' : ''}</span>
+        </div>
+        <h2 class="font-display text-2xl font-semibold text-ink group-hover:text-forest transition-colors">The Archive</h2>
+        <p class="font-ui text-[12px] text-ink-60 leading-relaxed">Short stories, essays, and poetry about buildings and the people who live within them. Open submissions.</p>
+        <p class="font-ui text-[10px] font-semibold text-forest uppercase tracking-wide">Browse Archive &rarr;</p>
+      </a>
+
+      <div class="px-0 md:px-8 py-4 md:py-0 space-y-3 opacity-50">
+        <div class="flex items-center justify-between">
+          <p class="font-mono text-[9px] uppercase tracking-widest text-sage">02 / Database</p>
+          <span class="font-mono text-[9px] border border-ink-30 px-1.5 py-0.5 text-ink-60">Coming Soon</span>
+        </div>
+        <h2 class="font-display text-2xl font-semibold text-ink">The Atlas</h2>
+        <p class="font-ui text-[12px] text-ink-60 leading-relaxed">A companion database of buildings and retrofit interventions, cross-referenced with every published story.</p>
+        <p class="font-ui text-[10px] font-semibold text-ink-60 uppercase tracking-wide">Under Development</p>
+      </div>
+
+      <a href="/screening-room" class="group px-0 md:pl-8 py-4 md:py-0 space-y-3 hover:opacity-80 transition-opacity">
+        <p class="font-mono text-[9px] uppercase tracking-widest text-gold">03 / Community</p>
+        <h2 class="font-display text-2xl font-semibold text-ink group-hover:text-forest transition-colors">The Screening Room</h2>
+        <p class="font-ui text-[12px] text-ink-60 leading-relaxed">Recorded readings and conversations between writers and retrofit engineers. The archive, live.</p>
+        <p class="font-ui text-[10px] font-semibold text-forest uppercase tracking-wide">Enter the Salon &rarr;</p>
+      </a>
+
+    </div>
+  </section>
+
+  <!--
+    ══════════════════════════════════════════
+    CURRENT ISSUE GRID
+    ══════════════════════════════════════════
+  -->
+  <section class="border-b-2 border-ink">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+      <div class="flex items-end justify-between mb-8 pb-3 border-b border-ink-12">
+        <div>
+          <p class="font-mono text-[9px] uppercase tracking-widest text-ink-60 mb-1">Vol. I &middot; Issue 1 — The Thermal Envelope</p>
+          <h2 class="font-display text-3xl font-semibold text-ink">Selected Writings</h2>
+        </div>
+        <a href="/archive" class="font-ui text-[11px] uppercase tracking-wider text-forest hover:underline font-medium">View All &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-12 border border-ink-12">
+        {secondary.length > 0 ? (
+          secondary.map((story) => (
+            <article class="p-6 space-y-4 hover:bg-forest-10 transition-colors">
+              <div class="flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-ink-60">
+                <span class="text-rust">{story.data.genre}</span>
+                <span>{story.data.readingTimeMinutes} min</span>
+              </div>
+              <h3 class="font-display text-xl font-semibold text-ink leading-snug">
+                <a href={`/archive/${story.slug}`} class="hover:text-forest transition-colors">{story.data.title}</a>
+              </h3>
+              {story.data.subtitle && (
+                <p class="font-display italic text-[13px] text-ink-60 leading-snug line-clamp-2">{story.data.subtitle}</p>
+              )}
+              <div class="pt-2 border-t border-ink-12 space-y-1">
+                <p class="font-mono text-[9px] uppercase text-ink-60">Paired Building</p>
+                <p class="font-ui text-[11px] text-ink font-medium">{story.data.pairedBuildingName}</p>
+                <p class="font-display italic text-[11px] text-forest leading-snug">{story.data.pairedIntervention}</p>
+              </div>
+              <div class="flex justify-between items-center font-ui text-[11px]">
+                <span class="text-ink-60">By {story.data.author}</span>
+                <a href={`/archive/${story.slug}`} class="text-forest font-medium hover:underline">Read &rarr;</a>
+              </div>
+            </article>
+          ))
+        ) : (
+          skeletonCards.map((_n) => (
+            <div class="p-6 space-y-4">
+              <div class="flex justify-between">
+                <div class="skeleton h-2.5 w-14 rounded"></div>
+                <div class="skeleton h-2.5 w-10 rounded"></div>
+              </div>
+              <div class="space-y-2">
+                <div class="skeleton h-5 w-full rounded"></div>
+                <div class="skeleton h-5 w-3/4 rounded"></div>
+              </div>
+              <div class="skeleton h-4 w-full rounded"></div>
+              <div class="border-t border-ink-12 pt-4 space-y-2">
+                <div class="skeleton h-2.5 w-24 rounded"></div>
+                <div class="skeleton h-3.5 w-36 rounded"></div>
+                <div class="skeleton h-3 w-full rounded"></div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+    </div>
+  </section>
+
+  <!--
+    ══════════════════════════════════════════
+    THE HYPOTHESIS BANNER
+    ══════════════════════════════════════════
+  -->
+  <section class="bg-forest text-canvas">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-8 space-y-4">
+        <p class="font-mono text-[9px] uppercase tracking-widest text-sage">The Hypothesis &middot; Scientific Rigour</p>
+        <blockquote class="font-display text-3xl sm:text-4xl font-semibold leading-display">
+          "The gap is narrative, not engineering."
+        </blockquote>
+        <p class="font-ui text-[13px] opacity-80 max-w-2xl leading-relaxed">
+          Green retrofitting is technically solvable but socially stalled. Does encountering retrofit as a story about specific buildings and people increase public support more than a technical brief?
+        </p>
+      </div>
+      <div class="lg:col-span-4 flex flex-col gap-3">
+        <a href="/the-hypothesis" class="block py-3 px-5 text-center font-ui text-[10px] uppercase tracking-wider font-semibold bg-canvas text-forest hover:bg-ink hover:text-canvas transition-colors">
+          Take the Parallel Reader Test &rarr;
+        </a>
+        <a href="/about#methodology" class="block py-3 px-5 text-center font-ui text-[10px] uppercase tracking-wider border border-canvas text-canvas hover:bg-canvas hover:text-forest transition-colors">
+          Read Our Methodology
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

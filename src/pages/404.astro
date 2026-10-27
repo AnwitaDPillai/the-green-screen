@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Unbuilt Space (404) — The Green Screen"
+  description="The room or corridor you are looking for has not yet been retrofitted."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center space-y-8">
+    <!-- Blueprint Floorplan Ruin Illustration -->
+    <div class="inline-block border border-forest/30 bg-canvas-card p-6 sm:p-10 max-w-md mx-auto shadow-sm">
+      <div class="font-mono text-[10px] text-ink-muted uppercase tracking-widest border-b border-blueprint pb-2 mb-4 flex justify-between">
+        <span>ARCHITECTURAL VOID</span>
+        <span class="text-terracotta">ERROR: 404</span>
+      </div>
+
+      <!-- Isometric ASCII Blueprint Representation -->
+      <pre class="font-mono text-xs sm:text-sm text-forest leading-tight select-none my-6">
+        +-----------------------------+
+       /                             /|
+      /       [ UNBUILT ROOM ]      / |
+     +-----------------------------+  |
+     |                             |  |
+     |   · · · · · · · · · · · ·   |  |
+     |   Capillary void detected   |  +
+     |   Thermal bridge: infinite  | /
+     |                             |/
+     +-----------------------------+
+      </pre>
+
+      <div class="font-mono text-[10px] text-ink-muted border-t border-blueprint pt-2">
+        SPEC: NO LIVING FABRIC DETECTED AT THIS COORDINATE
+      </div>
+    </div>
+
+    <div class="space-y-4 max-w-lg mx-auto">
+      <h1 class="font-display text-3xl sm:text-4xl text-forest font-semibold">
+        This room has not yet been built.
+      </h1>
+      <p class="font-serif italic text-base sm:text-lg text-ink-light leading-relaxed">
+        Or perhaps its retrofit intervention was decommissioned. The wall you were looking for cannot be found in the current archival volume.
+      </p>
+    </div>
+
+    <div class="pt-4 flex justify-center space-x-4 font-sans text-xs">
+      <a
+        href="/"
+        class="px-6 py-3 bg-forest text-canvas font-semibold uppercase tracking-wider hover:bg-forest-dark transition-colors"
+      >
+        Return to the Front Page →
+      </a>
+      <a
+        href="/archive"
+        class="px-6 py-3 border border-forest text-forest font-semibold uppercase tracking-wider hover:bg-canvas-card transition-colors"
+      >
+        Browse The Archive
+      </a>
+    </div>
+  </div>
+</Layout>

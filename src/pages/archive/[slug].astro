@@ -1,0 +1,213 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { isPubliclyPublished } from '../../lib/publication';
+
+export async function getStaticPaths() {
+  const allStories = await getCollection('archive');
+  // CRITICAL: Generate routes ONLY for strictly published pieces
+  const publishedStories = allStories.filter((story) => isPubliclyPublished(story));
+
+  return publishedStories.map((story) => ({
+    params: { slug: story.slug },
+    props: { story },
+  }));
+}
+
+const { story } = Astro.props;
+const { Content } = await story.render();
+
+const formattedDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(story.data.publishDate));
+---
+
+<Layout
+  title={`${story.data.title} — The Green Screen`}
+  description={story.data.subtitle || `${story.data.genre} by ${story.data.author}`}
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <!-- Breadcrumb -->
+    <nav class="font-mono text-xs text-ink-muted mb-8 flex items-center space-x-2 border-b border-blueprint pb-3">
+      <a href="/archive" class="hover:text-forest transition-colors">THE ARCHIVE</a>
+      <span>/</span>
+      <span class="text-terracotta uppercase">{story.data.genre}</span>
+      <span>/</span>
+      <span class="text-ink truncate">{story.data.title}</span>
+    </nav>
+
+    <!-- Layout Grid: Literary Article (Left) + Sticky Technical Companion (Right) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+      <!-- Article Center Column -->
+      <article class="lg:col-span-8 space-y-8">
+        <!-- Title Header -->
+        <header class="space-y-4 border-b border-blueprint pb-8">
+          <div class="flex items-center space-x-3 font-mono text-xs text-ink-muted">
+            <span class="px-2 py-0.5 bg-forest text-canvas text-[10px] font-semibold uppercase">
+              ISSUE NO. {story.data.issueNumber}
+            </span>
+            <span>·</span>
+            <span>{story.data.readingTimeMinutes} MINUTE READ</span>
+            <span>·</span>
+            <time datetime={story.data.publishDate.toISOString()}>{formattedDate}</time>
+          </div>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-forest font-semibold leading-[1.1] tracking-tight">
+            {story.data.title}
+          </h1>
+
+          {story.data.subtitle && (
+            <p class="font-serif italic text-xl sm:text-2xl text-ink-light leading-relaxed">
+              {story.data.subtitle}
+            </p>
+          )}
+
+          <div class="pt-4 flex items-center justify-between font-sans text-xs sm:text-sm border-t border-blueprint/60">
+            <div>
+              <span class="text-ink-muted">By</span>{' '}
+              <span class="font-semibold text-ink">{story.data.author}</span>
+            </div>
+            <!-- Citation Button / Modal Trigger -->
+            <button
+              onclick="document.getElementById('citation-dialog').showModal()"
+              class="font-mono text-xs text-forest hover:text-forest-dark uppercase tracking-wider underline cursor-pointer"
+            >
+              [Cite this Piece]
+            </button>
+          </div>
+        </header>
+
+        <!-- Literary Text with Drop Cap -->
+        <div class="prose prose-lg max-w-none text-ink font-serif drop-cap leading-relaxed">
+          <Content />
+        </div>
+
+        <!-- Author Biography & Editorial Sign-off -->
+        <footer class="mt-14 pt-8 border-t-2 border-forest space-y-6">
+          <div class="bg-canvas-card border border-blueprint p-6 space-y-2">
+            <span class="font-mono text-[10px] uppercase text-forest font-semibold tracking-wider block">
+              CONTRIBUTOR DOSSIER
+            </span>
+            <h4 class="font-display text-lg text-ink font-semibold">{story.data.author}</h4>
+            {story.data.authorBio && (
+              <p class="font-serif italic text-sm text-ink-muted leading-relaxed">
+                {story.data.authorBio}
+              </p>
+            )}
+          </div>
+
+          <!-- Sources & Fact-check certification -->
+          {story.data.sources && story.data.sources.length > 0 && (
+            <div class="border border-blueprint bg-canvas-paper p-5 font-mono text-xs space-y-2 text-ink-muted">
+              <div class="text-[11px] font-semibold uppercase text-forest flex items-center space-x-2">
+                <span>✓ FACT-CHECK & RETROFIT VERIFICATION SOURCES</span>
+              </div>
+              <ul class="list-disc list-inside space-y-1 text-[11px]">
+                {story.data.sources.map((src) => (
+                  <li>{src}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </footer>
+      </article>
+
+      <!-- Sticky Technical Companion (The Atlas Link) -->
+      <aside class="lg:col-span-4 sticky top-28 space-y-6">
+        <div class="border border-blueprint bg-canvas-paper p-6 space-y-4 shadow-sm">
+          <div class="border-b border-blueprint pb-3 flex justify-between items-center">
+            <span class="font-mono text-xs font-semibold text-forest uppercase tracking-wider">
+              REAL RETROFIT COMPANION
+            </span>
+            <span class="font-mono text-[10px] text-terracotta">ATLAS LINK</span>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <span class="font-mono text-[10px] uppercase text-ink-muted tracking-wider block">Real Building</span>
+              <h3 class="font-display text-lg text-ink font-semibold">{story.data.pairedBuildingName}</h3>
+              <p class="font-sans text-xs text-ink-muted">{story.data.pairedBuildingLocation}</p>
+            </div>
+
+            <div>
+              <span class="font-mono text-[10px] uppercase text-ink-muted tracking-wider block">Typology</span>
+              <span class="font-sans text-xs font-medium text-forest uppercase">
+                {story.data.buildingTypology}
+              </span>
+            </div>
+
+            <div>
+              <span class="font-mono text-[10px] uppercase text-ink-muted tracking-wider block">Intervention</span>
+              <p class="font-serif italic text-sm text-ink leading-snug">
+                {story.data.pairedIntervention}
+              </p>
+            </div>
+
+            <div class="border-t border-blueprint pt-3 font-mono text-[11px] space-y-2">
+              <div class="text-ink-muted">Atlas Verification:</div>
+              <div class="text-forest text-[11px] leading-relaxed">
+                Certified by retrofit building engineer review.
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <a
+              href="/the-hypothesis"
+              class="block w-full py-2.5 text-center bg-forest hover:bg-forest-dark text-canvas font-sans text-xs uppercase tracking-wider font-semibold transition-colors"
+            >
+              Compare with Technical Brief →
+            </a>
+          </div>
+        </div>
+
+        <!-- Issue Table of Contents Quick Nav -->
+        <div class="border border-blueprint bg-canvas-card p-5 font-sans text-xs space-y-3">
+          <span class="font-mono text-[10px] uppercase text-forest font-semibold tracking-wider block">
+            MORE IN VOLUME I
+          </span>
+          <p class="text-ink-muted text-xs leading-relaxed">
+            Discover other architectural narratives in this issue's exploration of the Thermal Envelope.
+          </p>
+          <a href="/archive" class="font-semibold text-forest hover:underline block pt-1">
+            Browse All Stories →
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Citation Dialog (Modal) -->
+  <dialog id="citation-dialog" class="backdrop:bg-ink/50 p-6 bg-canvas border border-blueprint max-w-lg w-full text-ink">
+    <div class="space-y-4">
+      <div class="flex justify-between items-center border-b border-blueprint pb-2">
+        <h3 class="font-display text-lg font-semibold text-forest">Cite this Work</h3>
+        <button onclick="document.getElementById('citation-dialog').close()" class="font-mono text-xs hover:text-forest">
+          ✕ CLOSE
+        </button>
+      </div>
+      <div class="space-y-3 font-mono text-xs">
+        <div>
+          <span class="text-ink-muted block uppercase text-[10px]">APA Style:</span>
+          <p class="bg-canvas-card p-3 border border-blueprint mt-1 select-all">
+            {story.data.author} ({new Date(story.data.publishDate).getFullYear()}). {story.data.title}. <em>The Green Screen</em>, 1(1).
+          </p>
+        </div>
+        <div>
+          <span class="text-ink-muted block uppercase text-[10px]">BibTeX:</span>
+          <pre class="bg-canvas-card p-3 border border-blueprint mt-1 text-[10px] overflow-x-auto select-all">
+@article{'{'}thegreenscreen_{story.slug},
+  author = "{story.data.author}",
+  title = "{story.data.title}",
+  journal = "The Green Screen",
+  year = "{new Date(story.data.publishDate).getFullYear()}",
+  volume = "1",
+  number = "1"
+{'}'}</pre>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</Layout>

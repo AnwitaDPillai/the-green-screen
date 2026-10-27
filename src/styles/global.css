@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+  }
+  html::-webkit-scrollbar { display: none; }
+
+  body {
+    background-color: #F3F0E7;
+    color: #222722;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #A9B7A5;
+    color: #0F3428;
+  }
+}
+
+@layer components {
+  /* Reading progress hairline */
+  #progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 1.5px;
+    background: #174C3B;
+    z-index: 200;
+    width: 0%;
+    transition: width 80ms linear;
+    pointer-events: none;
+  }
+
+  /* Paper grain texture */
+  .paper {
+    background-color: #F3F0E7;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+
+  /* Drop cap for article openers */
+  .drop-cap > p:first-child::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 0.8;
+    float: left;
+    margin-right: 0.08em;
+    margin-top: 0.08em;
+    color: #174C3B;
+  }
+
+  /* Skeleton loader pulse */
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 0.18; }
+  }
+  .skeleton {
+    background-color: rgba(34,39,34,0.10);
+    animation: skeleton-pulse 1.8s ease-in-out infinite;
+  }
+}
