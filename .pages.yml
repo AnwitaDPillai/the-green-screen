@@ -5,10 +5,10 @@ media:
   input: public/media
   output: /media
 
-collections:
+content:
   - name: archive
     label: The Archive (Stories & Essays)
-    type: content
+    type: collection
     path: src/content/archive
     fields:
       - name: title
@@ -100,7 +100,7 @@ collections:
 
   - name: screening-room
     label: The Screening Room (Dialogues)
-    type: content
+    type: collection
     path: src/content/screening-room
     fields:
       - name: title
@@ -145,7 +145,7 @@ collections:
 
   - name: issues
     label: Issues & Volumes
-    type: content
+    type: collection
     path: src/content/issues
     fields:
       - name: issueNumber
