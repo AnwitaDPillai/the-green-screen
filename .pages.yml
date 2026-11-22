@@ -91,6 +91,9 @@ content:
       - name: sources
         label: Factual / Technical Sources
         type: list
+      - name: technicalAuthor
+        label: Technical Brief Author Name
+        type: string
       - name: technicalReport
         label: Full Technical Brief / Companion Report
         type: rich-text

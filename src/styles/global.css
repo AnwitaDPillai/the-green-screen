@@ -66,4 +66,27 @@
     background-color: rgba(34,39,34,0.10);
     animation: skeleton-pulse 1.8s ease-in-out infinite;
   }
+
+  /* Archival custom scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(23, 76, 59, 0.4) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(23, 76, 59, 0.25);
+    border-radius: 9999px;
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(23, 76, 59, 0.55);
+  }
 }

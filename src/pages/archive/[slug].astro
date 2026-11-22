@@ -146,7 +146,7 @@ const technicalReportHtml = story.data.technicalReport
       <!-- Sticky Technical Companion Side Panel (Right) -->
       <aside
         id="technical-panel"
-        class="hidden lg:block lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 space-y-6 max-h-[calc(100vh-7rem)] overflow-y-auto pr-1"
+        class="hidden lg:block lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 space-y-6 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 custom-scrollbar"
       >
         <!-- Real Retrofit Metadata Header Card -->
         <div class="border border-blueprint bg-canvas-paper p-5 space-y-4 shadow-sm">
@@ -179,6 +179,13 @@ const technicalReportHtml = story.data.technicalReport
                 {story.data.pairedIntervention}
               </p>
             </div>
+
+            {story.data.technicalAuthor && (
+              <div class="col-span-2 border-t border-blueprint/60 pt-2 flex items-center justify-between font-mono text-[11px]">
+                <span class="text-ink-muted uppercase text-[10px]">Technical Author:</span>
+                <span class="font-semibold text-forest">{story.data.technicalAuthor}</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -186,9 +193,16 @@ const technicalReportHtml = story.data.technicalReport
         {technicalReportHtml ? (
           <div class="border border-blueprint bg-canvas-paper p-6 space-y-4 shadow-sm">
             <div class="border-b border-blueprint pb-3 flex items-center justify-between">
-              <h2 class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
-                TECHNICAL REPORT ON RETROFIT APPLICATION
-              </h2>
+              <div>
+                <h2 class="font-mono text-xs font-bold text-forest uppercase tracking-wider">
+                  TECHNICAL REPORT ON RETROFIT APPLICATION
+                </h2>
+                {story.data.technicalAuthor && (
+                  <p class="font-sans text-[11px] text-ink-muted mt-0.5">
+                    Authored by <span class="font-semibold text-ink">{story.data.technicalAuthor}</span>
+                  </p>
+                )}
+              </div>
               <span class="font-mono text-[10px] text-ink-muted">Condition A</span>
             </div>
 

@@ -1,8 +1,8 @@
 ---
 title: "The Roof Has Its Own Ideas About Summer"
 subtitle: "Reggio Emilia, and the business of keeping the heat outside"
-author: "The Green Screen Contributor"
-authorBio: "Resident and observer of social housing retrofits across Northern Italy."
+author: "Anwita D Pillai"
+authorBio: "Editor-in-Chief. Her works delight in the absences, mythologies, and mistranslations that shape how we live and mishear the world."
 genre: "Fiction"
 buildingTypology: "Housing Block"
 pairedBuildingName: "Via Guicciardini & Via Tiziano Pilot Blocks"
@@ -20,6 +20,7 @@ sources:
   - "https://energy.ec.europa.eu/topics/energy-efficiency/energy-performance-buildings/energy-performance-buildings-directive_en"
   - "https://grins.it/sites/default/files/2026-10/d6211.pdf"
   - "https://grins.it/output/distributional-effects-superbonus-and-ecobonus-programs-italy-survey-public-housing-tenants"
+technicalAuthor: "Kira Thishavia"
 technicalReport: |
   ### The Predicament
 
