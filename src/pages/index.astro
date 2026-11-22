@@ -6,7 +6,10 @@ import { getPublishedEntries } from '../lib/publication';
 const allStories = await getCollection('archive');
 const published  = getPublishedEntries(allStories);
 const featured   = published.find(s => s.data.featured) ?? published[0] ?? null;
-const secondary  = published.filter(s => s.slug !== featured?.slug).slice(0, 3);
+// Include all published pieces in Selected Writings (or remaining when multiple exist)
+const secondary  = published.length > 1 
+  ? published.filter(s => s.slug !== featured?.slug).slice(0, 3) 
+  : published;
 
 const skeletonCards = [1, 2, 3];
 ---
@@ -238,7 +241,7 @@ const skeletonCards = [1, 2, 3];
       <div class="lg:col-span-8 space-y-4">
         <p class="font-mono text-[9px] uppercase tracking-widest text-sage">The Hypothesis &middot; Scientific Rigour</p>
         <blockquote class="font-display text-3xl sm:text-4xl font-semibold leading-display">
-          "The gap is narrative, not engineering."
+          The gap is narrative, not engineering.
         </blockquote>
         <p class="font-ui text-[13px] opacity-80 max-w-2xl leading-relaxed">
           Green retrofitting is technically solvable but socially stalled. Does encountering retrofit as a story about specific buildings and people increase public support more than a technical brief?
