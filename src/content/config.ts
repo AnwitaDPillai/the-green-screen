@@ -28,6 +28,7 @@ const archive = defineCollection({
     publishDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     sources: z.array(z.string()).default([]),
+    technicalReport: z.string().optional(),
   }),
 });
 

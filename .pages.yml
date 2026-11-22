@@ -91,6 +91,9 @@ collections:
       - name: sources
         label: Factual / Technical Sources
         type: list
+      - name: technicalReport
+        label: Full Technical Brief / Companion Report
+        type: rich-text
       - name: body
         label: Literary Text Body
         type: rich-text
